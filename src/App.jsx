@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import "./App.css";
 
@@ -12,7 +12,9 @@ function App() {
     console.log(result);
   }
 
-  fetchData();
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return <></>;
 }
