@@ -14,7 +14,46 @@ import "./App.css";
 // something to either change state or status of that card in an object (for example alreadyClicked: true)
 
 function App() {
+  // component for the cards
+  const [difficulty, setDifficulty] = useState(6); //6 is easy, 9 intermediate, 12 is hard
+
+  return (
+    <>
+      <Game difficulty={difficulty} />
+    </>
+  );
+}
+
+function Game({ difficulty }) {
+  // fetch the data
+
   const [data, setData] = useState(null);
+  // function pokeUrl(name) {
+  //   `https://pokeapi.co/api/v2/pokemon/${name}`;
+  // }
+
+  // getRandomPokemonId(6);
+
+  //space for fetching the pokemon from the api
+  // dont forget loading screen
+  async function fetchData() {
+    console.log("loading...");
+    // const response = await fetch(`https://pokeapi.co/api/v2/pokemon`);
+    const response = await fetch(
+      `https://pokeapi.co/api/v2/pokemon/?offset=0&limit=150`
+    );
+    const result = await response.json();
+    setData(result);
+    console.log(result);
+    // console.log(result);
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  /////////////////////////////
+  // get random numbers
   let randomPokemonIdArr = [];
 
   // this part is to create random numbers to get random pokemon from 150
@@ -31,29 +70,24 @@ function App() {
     }
     console.log(randomPokemonIdArr);
   }
+  getRandomPokemonId(difficulty);
+  //objects or state or both for the  card image and if itsclicked or not
 
-  getRandomPokemonId(6);
+  // generate cards
 
-  // will have to do a function that runs random number (xTimes) depending on the difficulty
+  return (
+    <>
+      {randomPokemonIdArr.map((pokemon) => (
+        <Card data={data} />
+      ))}
+    </>
+  );
+}
 
-  //space for fetching the pokemon from the api
-  // dont forget loading screen
-  async function fetchData() {
-    console.log("loading...");
-    // const response = await fetch(`https://pokeapi.co/api/v2/pokemon`);
-    const response = await fetch(
-      `https://pokeapi.co/api/v2/pokemon/?offset=0&limit=150`
-    );
-    const result = await response.json();
-    console.log(result);
-    // console.log(result);
-  }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  return <></>;
+function Card({ data }) {
+  return <>asd</>;
 }
 
 export default App;
+
+// reshuffle
