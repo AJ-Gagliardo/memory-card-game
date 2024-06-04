@@ -74,18 +74,22 @@ function Game({ difficulty }) {
   //objects or state or both for the  card image and if itsclicked or not
 
   // generate cards
-
+  
+  //this works
+  // {console.log(randomPokemonIdArr.map((pokemon)=>(data.results[pokemon])))}
   return (
     <>
-      {randomPokemonIdArr.map((pokemon) => (
-        <Card data={data} />
-      ))}
+      {data ? 
+      randomPokemonIdArr.map((pokemonId, index) => (
+        <Card data={data} pokemonId = {pokemonId} key={index}  />
+      )): (<p>Loading...</p>)
+      }
     </>
   );
 }
 
-function Card({ data }) {
-  return <>asd</>;
+function Card({ data, pokemonId }) {
+  return <div>{data.results[pokemonId].name}</div>; // this is not working, working on it since in console it works
 }
 
 export default App;
