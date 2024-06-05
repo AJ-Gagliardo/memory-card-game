@@ -78,18 +78,18 @@ function Game({ difficulty }) {
   //this works
   // {console.log(randomPokemonIdArr.map((pokemon)=>(data.results[pokemon])))}
   return (
-    <>
+    <div className='game'>
       {data ? 
       randomPokemonIdArr.map((pokemonId, index) => (
         <Card data={data} pokemonId = {pokemonId} key={index}  />
       )): (<p>Loading...</p>)
       }
-    </>
+    </div>
   );
 }
 
 function Card({ data, pokemonId }) {
-  return <div>{data.results[pokemonId].name}</div>; // this is not working, working on it since in console it works
+  return <div className='card'>{data.results[pokemonId].name}</div>; // this is not working, working on it since in console it works
 }
 
 export default App;
