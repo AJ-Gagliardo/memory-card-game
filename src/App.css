@@ -34,24 +34,24 @@
 }
 
 .card {
-  padding: 2em;
-  background-color:slategray;
+  padding: 4em;
+  background-color: slategray;
   border-style: solid 8px;
-  box-shadow:black;
+  box-shadow: black;
   border-radius: 5%;
-  height:15vh;
+  height: 15vh;
 }
 
-.card:hover{cursor: pointer;}
+.card:hover {
+  cursor: pointer;
+}
 
 .read-the-docs {
   color: #888;
-  
 }
 
-.game{
-  display:grid;
+.game {
+  display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 8px;
 }
-

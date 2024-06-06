@@ -51,17 +51,16 @@ function Game({ difficulty }) {
     //   randomPokemonIdArr.map((pokemonId)=>
     //     `https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
     // }
-  
+
     //working on this one
-  // const imagesPromise = result.results.map(async (pokemon)=> {
-  //   const res = await fetch(pokemon.url);
-  //   const pokeData = await res.json();
-  //   return pokeData.sprites.front_default;
+    const imagesPromise = result.results.map(async (pokemon) => {
+      const res = await fetch(pokemon.url);
+      const pokeData = await res.json();
+      return pokeData.sprites.front_default;
+    });
 
-  // } );
-
-  // const images = await Promise.all(imagesPromise);
-  // setPokeImgs(images);
+    const images = await Promise.all(imagesPromise);
+    setPokeImgs(images);
   }
 
   useEffect(() => {
@@ -89,29 +88,36 @@ function Game({ difficulty }) {
   getRandomPokemonId(difficulty);
   //objects or state or both for the  card image and if itsclicked or not
 
-
-
   // generate cards
-  
+
   //this works
   // {console.log(randomPokemonIdArr.map((pokemon)=>(data.results[pokemon])))}
   return (
-    <div className='game'>
-      {data ? 
-      randomPokemonIdArr.map((pokemonId, index) => (
-        <Card data={data} pokemonId = {pokemonId} key={index}  />
-      )): (<p>Loading...</p>)
-      }
+    <div className="game">
+      {data && pokeImgs ? (
+        randomPokemonIdArr.map((pokemonId, index) => (
+          <Card
+            data={data}
+            pokemonId={pokemonId}
+            key={index}
+            pokeImgs={pokeImgs[pokemonId]}
+          />
+        ))
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 }
 
 function Card({ data, pokemonId, pokeImgs }) {
-  return <div className='card'>
-    {/* <img src={data.results[pokemonId]}></img> */}
-    <p>{data.results[pokemonId].name}</p>
-    
-    </div>; // this is not working, working on it since in console it works
+  return (
+    <div className="card">
+      {/* {console.log(pokeImgs[pokemonId])} */}
+      <img src={pokeImgs}></img>
+      <p>{data.results[pokemonId].name}</p>
+    </div>
+  ); // this is not working, working on it since in console it works
 }
 
 export default App;
