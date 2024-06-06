@@ -137,6 +137,10 @@ function Card({ data, pokemonId, pokeImgs, setScore, score }) {
       setSelectedBefore(true);
       setScore(score + 1);
     }
+    if (selectedBefore) {
+      alert("sorry try again");
+      return;
+    }
   }
 
   function renderCard() {
