@@ -30,7 +30,7 @@ function Game({ difficulty }) {
   const [data, setData] = useState(null);
   const [pokeImgs, setPokeImgs] = useState([]);
   const [score, setScore] = useState(0);
-  // const [randomPokemonIdArr, setRandomPokemonIdArr] = useState([]);
+  const [randomPokemonIdArr, setRandomPokemonIdArr] = useState([]);
 
   // function pokeUrl(name) {
   //   `https://pokeapi.co/api/v2/pokemon/${name}`;
@@ -72,23 +72,29 @@ function Game({ difficulty }) {
 
   /////////////////////////////
   // get random numbers
-  let randomPokemonIdArr = [];
+
+  useEffect(() => {
+    let ids = [];
+
+    function randomNumber() {
+      console.log("i am trying");
+      return Math.floor(Math.random() * 150);
+    }
+
+    function getRandomPokemonId(num) {
+      ids = [];
+      for (let i = 0; i < num; i++) {
+        ids.push(randomNumber());
+      }
+      // console.log(randomPokemonIdArr);
+      return ids;
+    }
+    setRandomPokemonIdArr(getRandomPokemonId(difficulty));
+  }, [difficulty]);
 
   // this part is to create random numbers to get random pokemon from 150
 
-  function randomNumber() {
-    console.log("i am trying");
-    return Math.floor(Math.random() * 150);
-  }
-
-  function getRandomPokemonId(num) {
-    randomPokemonIdArr = [];
-    for (let i = 0; i < num; i++) {
-      randomPokemonIdArr.push(randomNumber());
-    }
-    console.log(randomPokemonIdArr);
-  }
-  getRandomPokemonId(difficulty);
+  // getRandomPokemonId(difficulty);
   //objects or state or both for the  card image and if itsclicked or not
 
   // generate cards
