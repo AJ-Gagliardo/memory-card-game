@@ -28,6 +28,7 @@ function Game({ difficulty }) {
   // fetch the data
 
   const [data, setData] = useState(null);
+  const [pokeImgs, setPokeImgs] = useState([]);
   // function pokeUrl(name) {
   //   `https://pokeapi.co/api/v2/pokemon/${name}`;
   // }
@@ -46,6 +47,21 @@ function Game({ difficulty }) {
     setData(result);
     console.log(result);
     // console.log(result);
+    // function getImages(){
+    //   randomPokemonIdArr.map((pokemonId)=>
+    //     `https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
+    // }
+  
+    //working on this one
+  // const imagesPromise = result.results.map(async (pokemon)=> {
+  //   const res = await fetch(pokemon.url);
+  //   const pokeData = await res.json();
+  //   return pokeData.sprites.front_default;
+
+  // } );
+
+  // const images = await Promise.all(imagesPromise);
+  // setPokeImgs(images);
   }
 
   useEffect(() => {
@@ -73,6 +89,8 @@ function Game({ difficulty }) {
   getRandomPokemonId(difficulty);
   //objects or state or both for the  card image and if itsclicked or not
 
+
+
   // generate cards
   
   //this works
@@ -88,8 +106,12 @@ function Game({ difficulty }) {
   );
 }
 
-function Card({ data, pokemonId }) {
-  return <div className='card'>{data.results[pokemonId].name}</div>; // this is not working, working on it since in console it works
+function Card({ data, pokemonId, pokeImgs }) {
+  return <div className='card'>
+    {/* <img src={data.results[pokemonId]}></img> */}
+    <p>{data.results[pokemonId].name}</p>
+    
+    </div>; // this is not working, working on it since in console it works
 }
 
 export default App;
