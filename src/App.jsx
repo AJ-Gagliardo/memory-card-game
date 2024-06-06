@@ -8,10 +8,10 @@ import "./App.css";
 
 // Fetch the data (done)
 // randomId generator (done)
-// implement something like dififculties example easy generates 6, medium 9, hard 12 (to be done)
-// cards themselves, make a compomnent only for cards so they can have their own state or a
+// implement something like dififculties example easy generates 6, medium 9, hard 12 ( done)
+// cards themselves, make a compomnent only for cards so they can have their own state or a (done)
 // something to reshuffle cards after every click
-// something to either change state or status of that card in an object (for example alreadyClicked: true)
+// something to either change state or status of that card in an object (for example alreadyClicked: true) (in process)
 
 function App() {
   // component for the cards
@@ -29,6 +29,9 @@ function Game({ difficulty }) {
 
   const [data, setData] = useState(null);
   const [pokeImgs, setPokeImgs] = useState([]);
+  const [score, setScore] = useState(0);
+  // const [randomPokemonIdArr, setRandomPokemonIdArr] = useState([]);
+
   // function pokeUrl(name) {
   //   `https://pokeapi.co/api/v2/pokemon/${name}`;
   // }
@@ -72,7 +75,7 @@ function Game({ difficulty }) {
   let randomPokemonIdArr = [];
 
   // this part is to create random numbers to get random pokemon from 150
-  // this will be a component
+
   function randomNumber() {
     console.log("i am trying");
     return Math.floor(Math.random() * 150);
@@ -93,32 +96,57 @@ function Game({ difficulty }) {
   //this works
   // {console.log(randomPokemonIdArr.map((pokemon)=>(data.results[pokemon])))}
   return (
-    <div className="game">
-      {data && pokeImgs ? (
-        randomPokemonIdArr.map((pokemonId, index) => (
-          <Card
-            data={data}
-            pokemonId={pokemonId}
-            key={index}
-            pokeImgs={pokeImgs[pokemonId]}
-          />
-        ))
-      ) : (
-        <p>Loading...</p>
-      )}
-    </div>
+    <>
+      <div>
+        <h2>
+          Score: {score}/{difficulty}
+        </h2>
+      </div>
+      <div className="game">
+        {data && pokeImgs ? (
+          randomPokemonIdArr.map((pokemonId, index) => (
+            <Card
+              data={data}
+              pokemonId={pokemonId}
+              key={index}
+              pokeImgs={pokeImgs[pokemonId]}
+              setScore={setScore}
+              score={score}
+            />
+          ))
+        ) : (
+          <p>Loading...</p>
+        )}
+      </div>
+    </>
   );
 }
 
-function Card({ data, pokemonId, pokeImgs }) {
-  return (
-    <div className="card">
-      {/* {console.log(pokeImgs[pokemonId])} */}
-      <img src={pokeImgs}></img>
-      <p>{data.results[pokemonId].name}</p>
-    </div>
-  ); // this is not working, working on it since in console it works
+function Card({ data, pokemonId, pokeImgs, setScore, score }) {
+  const [selectedBefore, setSelectedBefore] = useState(false);
+
+  //function to change state of card
+  function selectCard() {
+    if (!selectedBefore) {
+      setSelectedBefore(true);
+      setScore(score + 1);
+    }
+  }
+
+  function renderCard() {
+    return (
+      <div className="card" onClick={() => selectCard()}>
+        <img src={pokeImgs}></img>
+        <p>{data.results[pokemonId].name}</p>
+      </div>
+    ); // this is not working, working on it since in console it works
+  }
+  // useEffect(() => {
+  //   renderCard();
+  // }, []);
+  return renderCard();
 }
+// return renderCard();
 
 export default App;
 
