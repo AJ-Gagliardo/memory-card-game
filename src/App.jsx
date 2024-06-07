@@ -10,8 +10,8 @@ import "./App.css";
 // randomId generator (done)
 // implement something like dififculties example easy generates 6, medium 9, hard 12 ( done)
 // cards themselves, make a compomnent only for cards so they can have their own state or a (done)
-// something to reshuffle cards after every click
-// something to either change state or status of that card in an object (for example alreadyClicked: true) (in process)
+// something to reshuffle cards after every click (in process )
+// something to either change state or status of that card in an object (for example alreadyClicked: true) (done)
 
 function App() {
   // component for the cards
@@ -31,6 +31,7 @@ function Game({ difficulty }) {
   const [pokeImgs, setPokeImgs] = useState([]);
   const [score, setScore] = useState(0);
   const [randomPokemonIdArr, setRandomPokemonIdArr] = useState([]);
+  const [alreadyFlipped, setAlreadyFlipped] = useState([]);
 
   // function pokeUrl(name) {
   //   `https://pokeapi.co/api/v2/pokemon/${name}`;
@@ -72,7 +73,7 @@ function Game({ difficulty }) {
 
   /////////////////////////////
   // get random numbers
-
+  // gives a random number between 1 to 150 which would be the pokemon ID
   useEffect(() => {
     let ids = [];
 
@@ -92,14 +93,11 @@ function Game({ difficulty }) {
     setRandomPokemonIdArr(getRandomPokemonId(difficulty));
   }, [difficulty]);
 
-  // this part is to create random numbers to get random pokemon from 150
-
-  // getRandomPokemonId(difficulty);
-  //objects or state or both for the  card image and if itsclicked or not
+  
 
   // generate cards
 
-  //this works
+// the UI of the game
   // {console.log(randomPokemonIdArr.map((pokemon)=>(data.results[pokemon])))}
   return (
     <>
@@ -128,11 +126,19 @@ function Game({ difficulty }) {
   );
 }
 
-function Card({ data, pokemonId, pokeImgs, setScore, score }) {
+// the card component, 
+function Card({ data, pokemonId, pokeImgs, setScore, score}) {
+  // to check if the card was clicked
   const [selectedBefore, setSelectedBefore] = useState(false);
+
+  
+// need to add here something like an object to see which ID was click
+// or maybe a state that checks which ids where already clicked
+// DONT do based on the card position since I will be shuffling
 
   //function to change state of card
   function selectCard() {
+    
     if (!selectedBefore) {
       setSelectedBefore(true);
       setScore(score + 1);
@@ -146,8 +152,8 @@ function Card({ data, pokemonId, pokeImgs, setScore, score }) {
   function renderCard() {
     return (
       <div className="card" onClick={() => selectCard()}>
-        <img src={pokeImgs}></img>
-        <p>{data.results[pokemonId].name}</p>
+        <img className="pokemonImg" src={pokeImgs}></img>
+        <p className="pokemonName">{data.results[pokemonId].name}</p>
       </div>
     ); // this is not working, working on it since in console it works
   }

@@ -34,12 +34,25 @@
 }
 
 .card {
-  padding: 4em;
-  background-color: slategray;
+  padding:2rem;
+  padding-bottom: 5em;
+  background-color: rgb(216, 223, 230);
   border-style: solid 8px;
-  box-shadow: black;
+  box-shadow: 4px 4px gray;
+  
   border-radius: 5%;
-  height: 15vh;
+  height: 14vh;
+  width:12vw;
+
+  display:grid;
+  grid-template-rows: 100% 20%;
+  justify-content: center;
+  justify-items: center;
+
+
+
+  /* align-items:center;
+  align-content: center; */
 }
 
 .card:hover {
@@ -54,4 +67,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 8px;
+}
+
+.pokemonName, .pokemonImg{
+  object-fit:contain;
 }
