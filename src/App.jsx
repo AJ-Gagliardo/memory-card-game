@@ -65,6 +65,12 @@ function Game({ difficulty }) {
 
     const images = await Promise.all(imagesPromise);
     setPokeImgs(images);
+
+function shuffleDeck(){
+  
+}
+
+
   }
 
   useEffect(() => {
@@ -93,7 +99,7 @@ function Game({ difficulty }) {
     setRandomPokemonIdArr(getRandomPokemonId(difficulty));
   }, [difficulty]);
 
-  
+    
 
   // generate cards
 
@@ -109,6 +115,7 @@ function Game({ difficulty }) {
       <div className="game">
         {data && pokeImgs ? (
           randomPokemonIdArr.map((pokemonId, index) => (
+
             <Card
               data={data}
               pokemonId={pokemonId}
