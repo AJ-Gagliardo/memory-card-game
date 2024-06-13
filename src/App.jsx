@@ -37,8 +37,6 @@ function Game({ difficulty }) {
   //   `https://pokeapi.co/api/v2/pokemon/${name}`;
   // }
 
-  // getRandomPokemonId(6);
-
   //space for fetching the pokemon from the api
   // dont forget loading screen
   async function fetchData() {
@@ -50,11 +48,6 @@ function Game({ difficulty }) {
     const result = await response.json();
     setData(result);
     console.log(result);
-    // console.log(result);
-    // function getImages(){
-    //   randomPokemonIdArr.map((pokemonId)=>
-    //     `https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
-    // }
 
     //working on this one
     const imagesPromise = result.results.map(async (pokemon) => {
@@ -65,12 +58,14 @@ function Game({ difficulty }) {
 
     const images = await Promise.all(imagesPromise);
     setPokeImgs(images);
-
-function shuffleDeck(){
-  
-}
-
-
+  }
+  function shuffleArray(array) {
+    for (let i = 0; i < array.length; i++) {
+      const randomIndex = Math.floor(Math.random() * array.length);
+      [array[i], array[randomIndex]] = [array[randomIndex], array[i]];
+    }
+    console.log(array);
+    return array;
   }
 
   useEffect(() => {
@@ -80,30 +75,32 @@ function shuffleDeck(){
   /////////////////////////////
   // get random numbers
   // gives a random number between 1 to 150 which would be the pokemon ID
+  let ids = [];
+
+  function randomNumber() {
+    console.log("i am trying");
+    return Math.floor(Math.random() * 150);
+  }
+
+  function getRandomPokemonId(num) {
+    ids = [];
+    for (let i = 0; i < num; i++) {
+      ids.push(randomNumber());
+    }
+    // console.log(randomPokemonIdArr);
+    return ids;
+  }
   useEffect(() => {
-    let ids = [];
-
-    function randomNumber() {
-      console.log("i am trying");
-      return Math.floor(Math.random() * 150);
-    }
-
-    function getRandomPokemonId(num) {
-      ids = [];
-      for (let i = 0; i < num; i++) {
-        ids.push(randomNumber());
-      }
-      // console.log(randomPokemonIdArr);
-      return ids;
-    }
     setRandomPokemonIdArr(getRandomPokemonId(difficulty));
   }, [difficulty]);
 
-    
+  useEffect(() => {
+    setRandomPokemonIdArr((prevIds) => shuffleArray([...prevIds]));
+  }, [score]);
 
   // generate cards
 
-// the UI of the game
+  // the UI of the game
   // {console.log(randomPokemonIdArr.map((pokemon)=>(data.results[pokemon])))}
   return (
     <>
@@ -115,7 +112,6 @@ function shuffleDeck(){
       <div className="game">
         {data && pokeImgs ? (
           randomPokemonIdArr.map((pokemonId, index) => (
-
             <Card
               data={data}
               pokemonId={pokemonId}
@@ -133,19 +129,17 @@ function shuffleDeck(){
   );
 }
 
-// the card component, 
-function Card({ data, pokemonId, pokeImgs, setScore, score}) {
+// the card component,
+function Card({ data, pokemonId, pokeImgs, setScore, score }) {
   // to check if the card was clicked
   const [selectedBefore, setSelectedBefore] = useState(false);
 
-  
-// need to add here something like an object to see which ID was click
-// or maybe a state that checks which ids where already clicked
-// DONT do based on the card position since I will be shuffling
+  // need to add here something like an object to see which ID was click
+  // or maybe a state that checks which ids where already clicked
+  // DONT do based on the card position since I will be shuffling
 
   //function to change state of card
   function selectCard() {
-    
     if (!selectedBefore) {
       setSelectedBefore(true);
       setScore(score + 1);
