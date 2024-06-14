@@ -19,12 +19,12 @@ function App() {
 
   return (
     <>
-      <Game difficulty={difficulty} />
+      <Game difficulty={difficulty} setDifficulty={setDifficulty} />
     </>
   );
 }
 
-function Game({ difficulty }) {
+function Game({ difficulty, setDifficulty }) {
   // fetch the data
 
   const [data, setData] = useState(null);
@@ -32,6 +32,7 @@ function Game({ difficulty }) {
   const [score, setScore] = useState(0);
   const [randomPokemonIdArr, setRandomPokemonIdArr] = useState([]);
   const [alreadyFlipped, setAlreadyFlipped] = useState([]);
+  const [isFlipped, setIsFlipped] = useState([]);
 
   // function pokeUrl(name) {
   //   `https://pokeapi.co/api/v2/pokemon/${name}`;
@@ -119,6 +120,9 @@ function Game({ difficulty }) {
               pokeImgs={pokeImgs[pokemonId]}
               setScore={setScore}
               score={score}
+              isFlipped={isFlipped}
+              setIsFlipped={setIsFlipped}
+              setDifficulty={setDifficulty}
             />
           ))
         ) : (
@@ -130,7 +134,16 @@ function Game({ difficulty }) {
 }
 
 // the card component,
-function Card({ data, pokemonId, pokeImgs, setScore, score }) {
+function Card({
+  data,
+  pokemonId,
+  pokeImgs,
+  setScore,
+  score,
+  isFlipped,
+  setIsFlipped,
+  setDifficulty,
+}) {
   // to check if the card was clicked
   const [selectedBefore, setSelectedBefore] = useState(false);
 
@@ -139,14 +152,30 @@ function Card({ data, pokemonId, pokeImgs, setScore, score }) {
   // DONT do based on the card position since I will be shuffling
 
   //function to change state of card
+
+  // function checkIfSelected(array, id) {
+  //   return array.includes(id);
+  // }
+
   function selectCard() {
-    if (!selectedBefore) {
-      setSelectedBefore(true);
+    // if (!selectedBefore) {
+    //   setSelectedBefore(true);
+    //   setScore(score + 1);
+    // }
+    // if (selectedBefore) {
+    //   alert("sorry try again");
+    //   return;
+    // }
+    // if(isFlipped.)
+
+    if (isFlipped.includes(pokemonId)) {
+      alert("Game over, this card was already selected");
+      setDifficulty(6);
+    } else {
       setScore(score + 1);
-    }
-    if (selectedBefore) {
-      alert("sorry try again");
-      return;
+      setIsFlipped([...isFlipped, pokemonId]);
+      // isFlipped = [...isFlipped, pokemonId];
+      console.log([...isFlipped, pokemonId]);
     }
   }
 
