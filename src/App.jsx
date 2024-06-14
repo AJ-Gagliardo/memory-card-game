@@ -33,6 +33,7 @@ function Game({ difficulty, setDifficulty }) {
   const [randomPokemonIdArr, setRandomPokemonIdArr] = useState([]);
   const [alreadyFlipped, setAlreadyFlipped] = useState([]);
   const [isFlipped, setIsFlipped] = useState([]);
+  const [restart, setRestart] = useState(0);
 
   // function pokeUrl(name) {
   //   `https://pokeapi.co/api/v2/pokemon/${name}`;
@@ -73,6 +74,28 @@ function Game({ difficulty, setDifficulty }) {
     fetchData();
   }, []);
 
+  // useEffect(() => {
+  //   function startGame() {
+  //     setScore(0);
+  //     setRandomPokemonIdArr([]);
+  //     setIsFlipped([]);
+  //     setRandomPokemonIdArr(getRandomPokemonId(difficulty));
+  //     console.log(`difficulty changed`);
+  //   }
+  //   startGame();
+  // }, [difficulty]);
+
+  useEffect(() => {
+    function startGame() {
+      setScore(0);
+      setRandomPokemonIdArr([]);
+      setIsFlipped([]);
+      setRandomPokemonIdArr(getRandomPokemonId(difficulty));
+      console.log(`difficulty changed to ${difficulty}`);
+    }
+    startGame();
+  }, [difficulty, restart]);
+
   /////////////////////////////
   // get random numbers
   // gives a random number between 1 to 150 which would be the pokemon ID
@@ -94,6 +117,10 @@ function Game({ difficulty, setDifficulty }) {
   useEffect(() => {
     setRandomPokemonIdArr(getRandomPokemonId(difficulty));
   }, [difficulty]);
+
+  // function restart() {
+  //   setDifficulty(difficulty);
+  // }
 
   useEffect(() => {
     setRandomPokemonIdArr((prevIds) => shuffleArray([...prevIds]));
@@ -123,6 +150,9 @@ function Game({ difficulty, setDifficulty }) {
               isFlipped={isFlipped}
               setIsFlipped={setIsFlipped}
               setDifficulty={setDifficulty}
+              difficulty={difficulty}
+              restart={restart}
+              setRestart={setRestart}
             />
           ))
         ) : (
@@ -143,6 +173,9 @@ function Card({
   isFlipped,
   setIsFlipped,
   setDifficulty,
+  difficulty,
+  setRestart,
+  restart,
 }) {
   // to check if the card was clicked
   const [selectedBefore, setSelectedBefore] = useState(false);
@@ -170,7 +203,8 @@ function Card({
 
     if (isFlipped.includes(pokemonId)) {
       alert("Game over, this card was already selected");
-      setDifficulty(6);
+
+      setRestart(restart + 1);
     } else {
       setScore(score + 1);
       setIsFlipped([...isFlipped, pokemonId]);
