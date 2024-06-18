@@ -23,7 +23,7 @@ function App() {
   const [audio, setAudio] = useState(null);
 
   function handleSetDifficulty(level) {
-    const audioInstance = playAudio(song2, 0.003, 2);
+    const audioInstance = playAudio(song2, 0.01, 2);
     setAudio(audioInstance);
     setTransition(true);
     setTimeout(() => {
