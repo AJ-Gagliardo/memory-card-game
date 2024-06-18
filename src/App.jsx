@@ -15,11 +15,35 @@ import "./App.css";
 
 function App() {
   // component for the cards
-  const [difficulty, setDifficulty] = useState(6); //6 is easy, 9 intermediate, 12 is hard
+  const [difficulty, setDifficulty] = useState(); //6 is easy, 9 intermediate, 12 is hard
 
   return (
     <>
-      <Game difficulty={difficulty} setDifficulty={setDifficulty} />
+      {difficulty ? (
+        <Game difficulty={difficulty} setDifficulty={setDifficulty} />
+      ) : (
+        <Menu difficulty={difficulty} setDifficulty={setDifficulty} />
+      )}
+    </>
+  );
+}
+
+function Menu({ difficulty, setDifficulty }) {
+  const [currentSong, setCurrentSong] = useState("");
+  let firstTime = true;
+
+  return (
+    <>
+      <p>
+        Instructions: You have to select cards (click) without repeating the
+        selection. You win if you can select all without repeating{" "}
+      </p>
+      <h3>Select Difficulty</h3>
+      <div>
+        <button onClick={() => setDifficulty(3)}>Easy</button>
+        <button onClick={() => setDifficulty(6)}>Medium</button>
+        <button onClick={() => setDifficulty(9)}>Hard</button>
+      </div>
     </>
   );
 }
@@ -95,6 +119,14 @@ function Game({ difficulty, setDifficulty }) {
     }
     startGame();
   }, [difficulty, restart]);
+
+  useEffect(() => {
+    if (score === difficulty) {
+      // setTimeout(console.log("you win!"), 1000);
+      alert("You Win!");
+      setRestart(restart + 1);
+    }
+  });
 
   /////////////////////////////
   // get random numbers
