@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import song1 from "./assets/Pokemon_Stadium.mp3";
+import song2 from "./assets/battle_theme.mp3";
+import playAudio from "../playAudio";
 
 import "./App.css";
 
@@ -16,13 +19,35 @@ import "./App.css";
 function App() {
   // component for the cards
   const [difficulty, setDifficulty] = useState(); //6 is easy, 9 intermediate, 12 is hard
+  const [transition, setTransition] = useState();
+  const [audio, setAudio] = useState(null);
+
+  function handleSetDifficulty(level) {
+    const audioInstance = playAudio(song2, 0.003, 2);
+    setAudio(audioInstance);
+    setTransition(true);
+    setTimeout(() => {
+      setDifficulty(level);
+      setTransition(false);
+    }, 2000);
+  }
+
+  // function stopAudio() {
+  //   if (audio) {
+  //     audio.pause(); // Pause the audio
+  //     audio.currentTime = 0; // Reset the audio to the beginning
+  //   }
+  // }
 
   return (
     <>
-      {difficulty ? (
+      {/* <button onClick={stopAudio()}>Stop Music</button> */}
+      {transition ? (
+        <div className="transition-screen"></div>
+      ) : difficulty ? (
         <Game difficulty={difficulty} setDifficulty={setDifficulty} />
       ) : (
-        <Menu difficulty={difficulty} setDifficulty={setDifficulty} />
+        <Menu difficulty={difficulty} setDifficulty={handleSetDifficulty} />
       )}
     </>
   );
