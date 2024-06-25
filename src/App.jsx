@@ -23,7 +23,7 @@ function App() {
   const [audio, setAudio] = useState(null);
 
   function handleSetDifficulty(level) {
-    const audioInstance = playAudio(song2, 0.01, 2);
+    const audioInstance = playAudio(song2, 0.1, 2);
     setAudio(audioInstance);
     setTransition(true);
     setTimeout(() => {
@@ -65,9 +65,12 @@ function Menu({ difficulty, setDifficulty }) {
       </p>
       <h3>Select Difficulty</h3>
       <div>
-        <button onClick={() => setDifficulty(3)}>Easy</button>
-        <button onClick={() => setDifficulty(6)}>Medium</button>
-        <button onClick={() => setDifficulty(9)}>Hard</button>
+        <button onClick={() => setDifficulty(3)}>Easy (3)</button>
+        <button onClick={() => setDifficulty(6)}>Medium (6)</button>
+        <button onClick={() => setDifficulty(9)}>Hard (9)</button>
+        <button class="pokemonMaster" onClick={() => setDifficulty(150)}>
+          Pokemon Master (150)
+        </button>
       </div>
     </>
   );
@@ -139,7 +142,13 @@ function Game({ difficulty, setDifficulty }) {
       setScore(0);
       setRandomPokemonIdArr([]);
       setIsFlipped([]);
-      setRandomPokemonIdArr(getRandomPokemonId(difficulty));
+
+      if (difficulty > 149) {
+        setRandomPokemonIdArr(getAllPokemonId());
+      } else {
+        setRandomPokemonIdArr(getRandomPokemonId(difficulty));
+      }
+
       console.log(`difficulty changed to ${difficulty}`);
     }
     startGame();
@@ -166,11 +175,25 @@ function Game({ difficulty, setDifficulty }) {
   function getRandomPokemonId(num) {
     ids = [];
     for (let i = 0; i < num; i++) {
-      ids.push(randomNumber());
+      let ranNum = randomNumber();
+      if (ids.includes(ranNum)) {
+        ranNum = randomNumber();
+      }
+      ids.push(ranNum);
     }
     // console.log(randomPokemonIdArr);
     return ids;
   }
+
+  function getAllPokemonId() {
+    ids = [];
+
+    for (let i = 0; i < 150; i++) {
+      ids.push(i);
+    }
+    return ids;
+  }
+
   useEffect(() => {
     setRandomPokemonIdArr(getRandomPokemonId(difficulty));
   }, [difficulty]);

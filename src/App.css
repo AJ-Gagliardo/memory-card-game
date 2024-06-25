@@ -91,3 +91,8 @@
   z-index: 999;
   animation: spiralTransition 3s forwards;
 }
+
+.pokemonMaster {
+  /* background-color: red; */
+  color: red;
+}
