@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import song1 from "./assets/Pokemon_Stadium.mp3";
 import song2 from "./assets/battle_theme.mp3";
 import playAudio from "../playAudio";
+import githubLogo from "./assets/github-logo.png";
 
 import "./App.css";
 
@@ -45,9 +46,15 @@ function App() {
       {transition ? (
         <div className="transition-screen"></div>
       ) : difficulty ? (
-        <Game difficulty={difficulty} setDifficulty={setDifficulty} />
+        <>
+          <Game difficulty={difficulty} setDifficulty={setDifficulty} />
+          <Footer />
+        </>
       ) : (
-        <Menu difficulty={difficulty} setDifficulty={handleSetDifficulty} />
+        <>
+          <Menu difficulty={difficulty} setDifficulty={handleSetDifficulty} />
+          <Footer />
+        </>
       )}
     </>
   );
@@ -240,6 +247,19 @@ function Game({ difficulty, setDifficulty }) {
         )}
       </div>
     </>
+  );
+}
+function Footer() {
+  return (
+    <div className="footer">
+      <hr></hr>
+      <div className="footerInfo">
+        <a href="https://aj-gagliardo.github.io/">
+          Portfolio: Antonio Gagliardo (ajgagliardo)
+          <img src={githubLogo} className="githubImg" />
+        </a>
+      </div>
+    </div>
   );
 }
 

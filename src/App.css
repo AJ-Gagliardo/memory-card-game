@@ -96,3 +96,20 @@
   /* background-color: red; */
   color: red;
 }
+
+.githubImg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.footer {
+  margin-top: 3rem;
+}
+.footerInfo a {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  text-justify: center;
+  align-items: center;
+}
