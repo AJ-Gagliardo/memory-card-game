@@ -24,7 +24,7 @@ function App() {
   const [audio, setAudio] = useState(null);
 
   function handleSetDifficulty(level) {
-    const audioInstance = playAudio(song2, 0.1, 2);
+    const audioInstance = playAudio(song2, 0.08, 2);
     setAudio(audioInstance);
     setTransition(true);
     setTimeout(() => {
@@ -47,6 +47,7 @@ function App() {
         <div className="transition-screen"></div>
       ) : difficulty ? (
         <>
+          {/* <MenuBtn /> */}
           <Game difficulty={difficulty} setDifficulty={setDifficulty} />
           <Footer />
         </>
@@ -82,6 +83,11 @@ function Menu({ difficulty, setDifficulty }) {
     </>
   );
 }
+
+// function MenuBtn({ setDifficulty, setAudio }) {
+//   // setAudio(null);
+//   return <button onClick={() => setDifficulty(0)}>Return to Menu</button>;
+// }
 
 function Game({ difficulty, setDifficulty }) {
   // fetch the data
