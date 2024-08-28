@@ -32,7 +32,7 @@
     animation: logo-spin infinite 20s linear;
   }
 }
-
+/* 
 .card {
   padding: 2rem;
   padding-bottom: 5em;
@@ -49,10 +49,8 @@
   justify-content: center;
   justify-items: center;
 
-  /* align-items:center;
-  align-content: center; */
-}
-
+} */
+/* 
 .card:hover {
   cursor: pointer;
 }
@@ -70,7 +68,7 @@
 .pokemonName,
 .pokemonImg {
   object-fit: contain;
-}
+} */
 
 @keyframes spiralTransition {
   0% {

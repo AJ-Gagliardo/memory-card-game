@@ -3,6 +3,7 @@ import song1 from "./assets/Pokemon_Stadium.mp3";
 import song2 from "./assets/battle_theme.mp3";
 import playAudio from "../playAudio";
 import githubLogo from "./assets/github-logo.png";
+import pokeball from "./assets/pokeball.png";
 
 import "./App.css";
 
@@ -72,11 +73,30 @@ function Menu({ difficulty, setDifficulty }) {
         selection. You win if you can select all without repeating{" "}
       </p>
       <h3>Select Difficulty</h3>
-      <div>
-        <button onClick={() => setDifficulty(3)}>Easy (3)</button>
-        <button onClick={() => setDifficulty(6)}>Medium (6)</button>
-        <button onClick={() => setDifficulty(9)}>Hard (9)</button>
-        <button class="pokemonMaster" onClick={() => setDifficulty(150)}>
+      <div className="flex gap-2 items-center justify-center">
+        <button
+          className="rounded bg-slate-100 p-1"
+          onClick={() => setDifficulty(3)}
+        >
+          Easy (3)
+        </button>
+        <button
+          className="rounded bg-slate-100 p-1"
+          onClick={() => setDifficulty(6)}
+        >
+          Medium (6)
+        </button>
+        <button
+          className="rounded bg-slate-100 p-1"
+          onClick={() => setDifficulty(9)}
+        >
+          Hard (9)
+        </button>
+        <button
+          className="rounded bg-slate-100 p-1"
+          class="pokemonMaster"
+          onClick={() => setDifficulty(150)}
+        >
           Pokemon Master (150)
         </button>
       </div>
@@ -99,6 +119,7 @@ function Game({ difficulty, setDifficulty }) {
   const [alreadyFlipped, setAlreadyFlipped] = useState([]);
   const [isFlipped, setIsFlipped] = useState([]);
   const [restart, setRestart] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   // function pokeUrl(name) {
   //   `https://pokeapi.co/api/v2/pokemon/${name}`;
@@ -108,6 +129,7 @@ function Game({ difficulty, setDifficulty }) {
   // dont forget loading screen
   async function fetchData() {
     console.log("loading...");
+    setIsLoading(true);
     // const response = await fetch(`https://pokeapi.co/api/v2/pokemon`);
     const response = await fetch(
       `https://pokeapi.co/api/v2/pokemon/?offset=0&limit=150`
@@ -125,6 +147,7 @@ function Game({ difficulty, setDifficulty }) {
 
     const images = await Promise.all(imagesPromise);
     setPokeImgs(images);
+    setIsLoading(false);
   }
   function shuffleArray(array) {
     for (let i = 0; i < array.length; i++) {
@@ -230,10 +253,11 @@ function Game({ difficulty, setDifficulty }) {
           Score: {score}/{difficulty}
         </h2>
       </div>
-      <div className="game">
-        {data && pokeImgs ? (
+      <div className="game grid-cols-3 grid gap-4">
+        {data && isLoading === false ? (
           randomPokemonIdArr.map((pokemonId, index) => (
             <Card
+              className=""
               data={data}
               pokemonId={pokemonId}
               key={index}
@@ -249,7 +273,10 @@ function Game({ difficulty, setDifficulty }) {
             />
           ))
         ) : (
-          <p>Loading...</p>
+          <div className="flex flex-col justify-center items-center w-2/2">
+            {/* <img src={pokeball} className="w-24"></img> */}
+            <p>Loading...</p>
+          </div>
         )}
       </div>
     </>
@@ -321,8 +348,11 @@ function Card({
 
   function renderCard() {
     return (
-      <div className="card" onClick={() => selectCard()}>
-        <img className="pokemonImg" src={pokeImgs}></img>
+      <div
+        className="card shadow-md bg-slate-100 flex flex-col justify-center text-center items-center w-2/2 py-8 rounded hover:cursor-pointer"
+        onClick={() => selectCard()}
+      >
+        <img className="pokemonImg w-36 " src={pokeImgs}></img>
         <p className="pokemonName">{data.results[pokemonId].name}</p>
       </div>
     ); // this is not working, working on it since in console it works
